@@ -1,9 +1,42 @@
-### Lake Superior
+### Some Use Cases to Help You Test Out gnssrefl
 
-**Background:** Station mchn is operated by NRCAN. The data are archived at SOPAC and NRCAN. 
+This document provides some use cases for GNSS interferometric reflectometry. 
+The goal is to provide you with tests to make sure you have properly installed the code. For details about the technique, 
+you should start with reading [Roesler and Larson, 2018](https://link.springer.com/article/10.1007/s10291-018-0744-8), 
+which was published open option.  
+
+### Install the gnssrefl code 
+
+Make sure **wget** exists on your machine.  If you type *which wget* and something comes back, you should be good.
+
+Read the [gnssrefl documentation](https://github.com/kristinemlarson/gnssrefl). 
+Note that there are some utilities described at the end of the code that you might
+find to be useful.
+
+Install either the github or the pypi version of gnssrefl
+
+Make the requested environment variables. 
+
+Put CRX2RNX in the EXE area. Make sure it is executable
+
+If you know how to compile Fortran code, I strongly urge you to download/compile the requested
+codes and install those executables in the correct place.
+
+For what it is worth, I have had times when I have been blocked from 
+downloading files (? after 20 file downloads - so maybe it is 
+my internet provider ?). When I turn on my VPN, all is well. I have not investigated this 
+in any detail. So take that for what you will. 
+
+### Test the code for mchn
+
+Station mchn is operated by NRCAN. The data are archived at SOPAC and NRCAN. *The station itself is located at Michipicoten Harbor on the northeast coast of Lake Superior, in Ontario, Canada.  The antenna is attached to a pillar on an outbuilding on a rocky outcrop overlooking the harbor, several meters above the water.*
+
+<img src="mchn_monu-cors.png" width="500"/>
+
+*Image from NGS CORS.*
 
 Unfortunately only L1 data should be used at this site. Encourage the station operators to 
-track L2C, L5 (and Galileo, Glonass, and Beidou !)
+track L2C, L5 (and Galileo, Glonass, and Beidou!)
 
 [You should use my web app to get a sense of what the site looks like. Please note that the app 
 will be analyzing data in real-time, so please wait for the answers to "pop" up in the 
@@ -19,18 +52,27 @@ Or use the ones on my web app. They are the same.
 From the periodogram and google Earth map you should be able to come up with a pretty good 
 azimuth mask.  Elevation angle might be a bit trickier, but in this case, go ahead and 
 use what I did, which is in the title of the periodogram plot. For azimuth, I suggest that you 
-use my web app. [Here is a pretty good start on an elevation and azimuth angle mask.](https://gnss-reflections.org/rzones?station=mchn&msl=on&RH=7&eang=2&azim1=80&azim2=180). 
+use my web app. [Here is a pretty good start on an elevation and azimuth angle mask](https://gnss-reflections.org/rzones?station=mchn&msl=on&RH=7&eang=2&azim1=80&azim2=180). 
 
 **Reproduce the web app results:**
 
-*rinex2snr mchn 2019 205 -archive scripps*
+First you need to make a SNR file. I will use the defaults, which only translates the GPS signals. If you have Fortran installed:
+
+*rinex2snr mchn 2019 205 -archive sopac*
+
+If you don't have Fortran installed:
+
+*rinex2snr mchn 2019 205 -archive sopac -fortran False*
+
+Let's look at the spectral characteristics of the SNR data for the default L1 settings:
 
 *quickLook mchn 2019 205*
 
 <img src="mchn-default.png" width="500">
 
-Why does this not look like the results from my web app?? Look closely. Make some changes
-at the commandline for quickLook.
+The four subplots show you different regions around the antenna. The x-axis tells you reflector height (RH) and the y-axis gives you the spectral amplitude of the SNR data. The multiple colors are used to depict different satellites that rise or set over that section (quadrant) of the field at MCHN. Which colors go to which satellites is not super important. You also see some skinnier gray data - and those are failed periodograms. This means that the code doesn't believe the results are relevant. I did not originally plot failed periodograms, but people asked for them, and I do think it is useful to see that there is some quality control being used in this code.
+
+Why does this not look like the results from my web app?? Look closely. Make some changes at the command line for quickLook.
 
 
 <img src="mchn-better.png" width="500">
@@ -41,12 +83,7 @@ Once you figure out what you need to do, go ahead and analyze the data from 2013
 
 You need to use **make_json_input** to set up the analysis instructions.
 [You will need to hand-edit it to only use L1 and to set the azimuth region.](mchn.json)
-You will notice that I have a pretty restricted azimuth region.  Although you can get
-good reflections beyond 180 degrees, there is clearly something funny in the water there
-(from google Earth), and if you look at the photograph, it is pretty obvious that there is something 
-sticking out of the water. Of course feel free to try something 
-different. But if you choose a mask that reflects off water and something 
-else, you aren't really measuring the height of the water.
+You will notice that I have a pretty restricted azimuth region.  Although you can get good reflections beyond 180 degrees, there is clearly something funny in the water there (from google Earth), and if you look at the photograph, it is pretty obvious that there is something sticking out of the water. Of course feel free to try something different. But if you choose a mask that reflects off water and something else, you aren't really measuring the height of the water.
 
 *gnssir mchn 2013 1 -doy_end 365*
 
@@ -73,12 +110,73 @@ and for the average
 
 <img src="mchn_3.png" width="500">
 
-The number of tracks you will require is going to depend on the site. Here the azimuth is restricted because
-we are on a coastline of a lake. On an ice sheet we can often use every azimuth, which means more tracks. And
-some of those sites also tracked multiple frequencies. Here we can only reliably use L1.
-Please note that these reflections are from ice in the winter and water during the summer. We 
-will be implementing surface bias corrections (ice,snow) to our software. Until then, please take this 
-into account when interpreting the results.
+The number of tracks you will require is going to depend on the site. Here the azimuth is restricted because we are on a coastline of a lake. On an ice sheet we can often use every azimuth, which means more tracks. And some of those sites also tracked multiple frequencies. Here we can only reliably use L1.
+Please note that these reflections are from ice in the winter and water during the summer. We will be implementing surface bias corrections (ice,snow) to our software. Until then, please take this into account when interpreting the results.
 
 
 Note: there is a tide gauge at this site. Please contact NRCAN for more information.
+
+### Use Cases (These are under development)
+
+<table>
+<TR>
+<TH>Cryosphere</TH>
+<TD>
+
+* [Lorne, Ross Ice Shelf, Antarctica](lorg_use.md)
+
+* [Dye2, Greenland Ice Sheet](gls1_use.md)
+
+* [Thwaites Glacier, Antarctica](lthw_use.md)
+
+* [Summit Camp, Greenland](smm3_use.md)
+</TD>
+<TH>Lakes and Rivers</TH>
+<td>
+
+* [Lake Taupo, New Zealand](tgho_use.md)
+
+
+* [Michipicoten, Lake Superior, Canada](mchn_use.md)
+
+* [St Lawrence River, Montreal, Canada](pmtl_use.md)
+
+* Steenbras Reservoir, Republic of South Africa
+
+</TD>
+<TH>Tides and Storm Surges</TH>
+<TD>
+
+* Hurricane Laura
+
+* St Michael, Alaska
+
+* Palmer Station, Antarctica
+
+</TD>
+</TR>
+
+<TR>
+<TH>Seasonal Snow</TH>
+<TD>
+
+* Half Island Park, Idaho
+
+* Niwot Ridge, Colorado
+
+* Coldfoot, Alaska
+
+* Priddis, Alberta, Canada
+
+</TD>
+<TH>Soil Moisture</TH>
+
+<TD>
+
+* TBD
+
+</TD>
+
+</TR>
+</Table>
+
