@@ -23,17 +23,17 @@ If you know how to compile Fortran code, I strongly urge you to download/compile
 codes and install those executables in the correct place.
 
 For what it is worth, I have had times when I have been blocked from 
-downloading files (? after 20 file downloads - so maybe it is 
-my internet provider ?). When I turn on my VPN, all is well. I have not investigated this 
+downloading files ~~(? after 20 file downloads - so maybe it is 
+my internet provider ?)~~. When I turn on my VPN, all is well. I have not investigated this 
 in any detail. So take that for what you will. 
 
 ### Test the code for mchn
 
-Station mchn is operated by NRCAN. The data are archived at SOPAC and NRCAN. *The station itself is located at Michipicoten Harbor on the northeast coast of Lake Superior, in Ontario, Canada.  The antenna is attached to a pillar on an outbuilding on a rocky outcrop overlooking the harbor, several meters above the water.*
+Station mchn is operated by NRCAN. The data are archived at SOPAC and NRCAN. <span style="color:red">The station itself is located at Michipicoten Harbor on the northeast coast of Lake Superior, in Ontario, Canada.  The antenna is attached to a pillar on an outbuilding on a rocky outcrop overlooking the harbor, several meters above the water.</span>
 
 <img src="mchn_monu-cors.png" width="500"/>
 
-*Image from NGS CORS.*
+<span style="color:red">Image from NGS CORS.</span>
 
 Unfortunately only L1 data should be used at this site. Encourage the station operators to 
 track L2C, L5 (and Galileo, Glonass, and Beidou!)
@@ -72,7 +72,7 @@ Let's look at the spectral characteristics of the SNR data for the default L1 se
 
 The four subplots show you different regions around the antenna. The x-axis tells you reflector height (RH) and the y-axis gives you the spectral amplitude of the SNR data. The multiple colors are used to depict different satellites that rise or set over that section (quadrant) of the field at MCHN. Which colors go to which satellites is not super important. You also see some skinnier gray data - and those are failed periodograms. This means that the code doesn't believe the results are relevant. I did not originally plot failed periodograms, but people asked for them, and I do think it is useful to see that there is some quality control being used in this code.
 
-Why does this not look like the results from my web app?? Look closely. Make some changes at the command line for quickLook.
+Why does this not look like the results from my web app? Look closely. Make some changes at the command line for quickLook.
 
 
 <img src="mchn-better.png" width="500">
