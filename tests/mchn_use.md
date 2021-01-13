@@ -1,68 +1,62 @@
-### Some Use Cases to Help You Test Out gnssrefl
+### Use Case for Michipicoten Harbor, Ontario
 
-This document provides some use cases for GNSS interferometric reflectometry. 
-The goal is to provide you with tests to make sure you have properly installed the code. For details about the technique, 
-you should start with reading [Roesler and Larson, 2018](https://link.springer.com/article/10.1007/s10291-018-0744-8), 
-which was published open option.  
+**Station Name:** 	mchn
 
-### Install the gnssrefl code 
+**Location:** Michipicoten Harbor, Ontario
 
-Make sure **wget** exists on your machine.  If you type *which wget* and something comes back, you should be good.
+**Archive:**  SOPAC, NRCAN
 
-Read the [gnssrefl documentation](https://github.com/kristinemlarson/gnssrefl). 
-Note that there are some utilities described at the end of the code that you might
-find to be useful.
+**DOI:** N/A
 
-Install either the github or the pypi version of gnssrefl
+**Ellipsoidal Coordinates:**
 
-Make the requested environment variables. 
+- Latitude: 47.961
 
-Put CRX2RNX in the EXE area. Make sure it is executable
+- Longitude: -84.901
 
-If you know how to compile Fortran code, I strongly urge you to download/compile the requested
-codes and install those executables in the correct place.
+- Height: 152.019 m
 
-For what it is worth, I have had times when I have been blocked from 
-downloading files ~~(? after 20 file downloads - so maybe it is 
-my internet provider ?)~~. When I turn on my VPN, all is well. I have not investigated this 
-in any detail. So take that for what you will. 
-
-### Test the code for mchn
-
-Station mchn is operated by NRCAN. The data are archived at SOPAC and NRCAN. <span style="color:red">The station itself is located at Michipicoten Harbor on the northeast coast of Lake Superior, in Ontario, Canada.  The antenna is attached to a pillar on an outbuilding on a rocky outcrop overlooking the harbor, several meters above the water.</span>
+[Station Page at Nevada Geodetic Laboratory](http://geodesy.unr.edu/NGLStationPages/stations/MCHN.sta)
 
 <img src="mchn_monu-cors.png" width="500"/>
 
-<span style="color:red">Image from NGS CORS.</span>
+
+### Data Summary
+
+Station mchn is operated by NRCAN. This site only tracks GPS.
 
 Unfortunately only L1 data should be used at this site. Encourage the station operators to 
 track L2C, L5 (and Galileo, Glonass, and Beidou!)
 
-[You should use my web app to get a sense of what the site looks like. Please note that the app 
+
+### Web App:
+
+You should use my web app to get a sense of what the site looks like. [Please note that the app 
 will be analyzing data in real-time, so please wait for the answers to "pop" up in the 
 left hand side of the page. It takes about 5 seconds](https://gnss-reflections.org/fancy6?example=mchn)
-The webapp provides you with a photograph, coordinates (make a note of them), 
+The webapp provides you with a photograph, coordinates (make a note of them), and 
 a google Earth map. Save the periodogram so you can look at it more closely.
 
-**Coordinates:** You can try the [Nevada Reno site](http://geodesy.unr.edu/NGLStationPages/stations/MCHN.sta).
-Or use the ones on my web app. They are the same.
+### Setting Azimuth and Elevation Mask
 
-
-**Picking a mask:**
 From the periodogram and google Earth map you should be able to come up with a pretty good 
 azimuth mask.  Elevation angle might be a bit trickier, but in this case, go ahead and 
 use what I did, which is in the title of the periodogram plot. For azimuth, I suggest that you 
 use my web app. [Here is a pretty good start on an elevation and azimuth angle mask](https://gnss-reflections.org/rzones?station=mchn&msl=on&RH=7&eang=2&azim1=80&azim2=180). 
 
-**Reproduce the web app results:**
+### Reproduce the Web App Results
 
-First you need to make a SNR file. I will use the defaults, which only translates the GPS signals. If you have Fortran installed:
+**Make SNR file** 
+
+I will use the defaults, which only translates the GPS signals. If you have Fortran installed:
 
 *rinex2snr mchn 2019 205 -archive sopac*
 
 If you don't have Fortran installed:
 
 *rinex2snr mchn 2019 205 -archive sopac -fortran False*
+
+**Quick Look at Data**
 
 Let's look at the spectral characteristics of the SNR data for the default L1 settings:
 
@@ -74,24 +68,29 @@ The four subplots show you different regions around the antenna. The x-axis tell
 
 Why does this not look like the results from my web app? Look closely. Make some changes at the command line for quickLook.
 
+*quickLook mchn 2019 205 -h1 2 -h2 8*
 
 <img src="mchn-better.png" width="500">
+
+### Analyze the Data
 
 Once you figure out what you need to do, go ahead and analyze the data from 2013.
 
 *rinex2snr mchn 2013 1 -archive sopac -doy_end 365*
 
 You need to use **make_json_input** to set up the analysis instructions.
+
+*make_json_input -e1 5 -e2 25 mchn 47.961 -84.901 152.019*
+
+
 [You will need to hand-edit it to only use L1 and to set the azimuth region.](mchn.json)
 You will notice that I have a pretty restricted azimuth region.  Although you can get good reflections beyond 180 degrees, there is clearly something funny in the water there (from google Earth), and if you look at the photograph, it is pretty obvious that there is something sticking out of the water. Of course feel free to try something different. But if you choose a mask that reflects off water and something else, you aren't really measuring the height of the water.
 
+Now that the analysis parameters are set, we can run **gnssir** to save the reflector height (RH) output.
+
 *gnssir mchn 2013 1 -doy_end 365*
 
-**Computing daily average**
-
-There are still outliers in your solutions - and in principle I encourage you to figure out better 
-restrictions, i.e. increase the amplitude requirement or peak to noise restriction. If you don't take this into 
-account, you can see what I mean:
+There are still outliers in your solutions - and in principle I encourage you to figure out better restrictions, i.e. increase the amplitude requirement or peak to noise restriction. If you don't take this into account, you can see what I mean when you compute the daily average:
 
 *daily_avg mchn 2 10*
 
@@ -115,68 +114,3 @@ Please note that these reflections are from ice in the winter and water during t
 
 
 Note: there is a tide gauge at this site. Please contact NRCAN for more information.
-
-### Use Cases (These are under development)
-
-<table>
-<TR>
-<TH>Cryosphere</TH>
-<TD>
-
-* [Lorne, Ross Ice Shelf, Antarctica](lorg_use.md)
-
-* [Dye2, Greenland Ice Sheet](gls1_use.md)
-
-* [Thwaites Glacier, Antarctica](lthw_use.md)
-
-* [Summit Camp, Greenland](smm3_use.md)
-</TD>
-<TH>Lakes and Rivers</TH>
-<td>
-
-* [Lake Taupo, New Zealand](tgho_use.md)
-
-
-* [Michipicoten, Lake Superior, Canada](mchn_use.md)
-
-* [St Lawrence River, Montreal, Canada](pmtl_use.md)
-
-* Steenbras Reservoir, Republic of South Africa
-
-</TD>
-<TH>Tides and Storm Surges</TH>
-<TD>
-
-* Hurricane Laura
-
-* St Michael, Alaska
-
-* Palmer Station, Antarctica
-
-</TD>
-</TR>
-
-<TR>
-<TH>Seasonal Snow</TH>
-<TD>
-
-* Half Island Park, Idaho
-
-* Niwot Ridge, Colorado
-
-* Coldfoot, Alaska
-
-* Priddis, Alberta, Canada
-
-</TD>
-<TH>Soil Moisture</TH>
-
-<TD>
-
-* TBD
-
-</TD>
-
-</TR>
-</Table>
-
