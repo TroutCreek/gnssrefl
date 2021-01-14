@@ -29,7 +29,7 @@ Unfortunately only L1 data should be used at this site. Encourage the station op
 track L2C, L5 (and Galileo, Glonass, and Beidou!)
 
 
-### Web App:
+### Web App
 
 You should use my web app to get a sense of what the site looks like. [Please note that the app 
 will be analyzing data in real-time, so please wait for the answers to "pop" up in the 
@@ -46,7 +46,7 @@ use my web app. [Here is a pretty good start on an elevation and azimuth angle m
 
 ### Reproduce the Web App Results
 
-**Make SNR file** 
+**Make SNR File** 
 
 I will use the defaults, which only translates the GPS signals. If you have Fortran installed:
 
