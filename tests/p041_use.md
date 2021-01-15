@@ -24,7 +24,7 @@ Ellipsoidal Coordinates:
 
 ## Data Summary
 
-The p041 antenna is ~2 meters tall. The site is relatively planar and free of obstructions. Since October 2018 the site has operated a Septentrio receiver. It has multi-GNSS signals in the default RINEX file and is operated by UNAVCO.
+The p041 antenna is ~2 meters tall. The site is relatively planar and free of obstructions. Since October 2018 the site has operated a Septentrio receiver. It has multi-GNSS signals in the default RINEX file and is operated by UNAVCO through the GAGE Facility as part of the Network of the Americas.
 
 ## Web App
 
