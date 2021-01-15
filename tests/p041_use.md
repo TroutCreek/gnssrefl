@@ -1,8 +1,8 @@
-### Use Case for Boulder, Colorado
+### Use Case for Boulder, Colorado, USA
 
 Station name: p041 
 
-Location: Boulder, CO 
+Location: Boulder, CO, USA
 
 Archive: UNAVCO, SOPAC 
 
@@ -82,66 +82,31 @@ I believe Beidou signals are tracked at this site, but the data are not availabl
 quickLook is meant to be a visual assessment of the spectral characteristics. However, it does print out the answers to a file called rh.txt. If you want to assess changes in the reflection environment around a GPS/GNSS sites, i.e. look at multiple days, please look at the other use cases I have compiled.
 
 
-### Use Cases (These are under development)
+### Analyze the Data
 
-<table>
-<TR>
-<TH>Cryosphere</TH>
-<TD>
+Begin by creating a json file to set up analysis parameters
 
-* [Lorne, Ross Ice Shelf, Antarctica](lorg_use.md)
+*make_json_input -e1 5 -e2 25 p041 39.94949 -105.19427 1728.842*
 
-* [Dye2, Greenland Ice Sheet](gls1_use.md)
+Because the site is uniformly flat, you can leave the parameters at default settings.
 
-* [Thwaites Glacier, Antarctica](lthw_use.md)
+Then run **rnx2snr** to obtain the SNR values:
 
-* [Summit Camp, Greenland](smm3_use.md)
-</TD>
-<TH>Lakes and Rivers</TH>
-<td>
+*rinex2snr p041 2020 1 -doy_end 365*
 
-* [Lake Taupo, New Zealand](tgho_use.md)
+Once the SNR values are available, run **gnssir** for 2020 to save the reflector heights for each day.
 
 
-* [Michipicoten, Lake Superior, Canada](mchn_use.md)
+*gnssir p041 1 -doy_end 365*
 
-* [St Lawrence River, Montreal, Canada](pmtl_use.md)
+Now try taking the daily average.  In this example, I will set the median filter to allow values within 0.25 meters of the median, and require 12 tracks to calculate the averages:
 
-* Steenbras Reservoir, Republic of South Africa
+*daily_avg p041 .25 10*
 
-</TD>
-<TH>Tides and Storm Surges</TH>
-<TD>
+**daily_avg** will first plot all the reflector heights available on all the days in the 2020/results/p041 director. 
 
-* Hurricane Laura
+<img src="p041-daily1.png" width="500">
 
-* St Michael, Alaska
+The code will next plot the daily average.  The spikes here correspond to decreased deflector height following winter storms.  Reflector height is reduced by a few centimeters in spring and early summer, possibly because grass at the site is thickest and greenest at this time of year.
 
-* Palmer Station, Antarctica
-
-</TD>
-</TR>
-
-<TR>
-<TH>Seasonal Snow</TH>
-<TD>
-
-* Half Island Park, Idaho
-
-* Niwot Ridge, Colorado
-
-* Coldfoot, Alaska
-
-* Priddis, Alberta, Canada
-
-</TD>
-<TH>Soil Moisture</TH>
-
-<TD>
-
-* TBD
-
-</TD>
-
-</TR>
-</Table>
+<img src="p041-daily2.png" width="500">

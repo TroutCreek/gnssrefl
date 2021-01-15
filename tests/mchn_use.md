@@ -1,8 +1,8 @@
-### Use Case for Michipicoten Harbor, Ontario
+### Use Case for Michipicoten Harbor, Ontario, Canada
 
 **Station Name:** 	mchn
 
-**Location:** Michipicoten Harbor, Ontario
+**Location:** Michipicoten Harbor, Ontario, Canada
 
 **Archive:**  SOPAC, NRCAN
 
@@ -15,6 +15,8 @@
 - Longitude: -84.901
 
 - Height: 152.019 m
+
+[Station Page at Natural Resources Canada](https://webapp.geod.nrcan.gc.ca/geod/data-donnees/station/report-rapport.php?id=M093001)
 
 [Station Page at Nevada Geodetic Laboratory](http://geodesy.unr.edu/NGLStationPages/stations/MCHN.sta)
 
@@ -113,4 +115,4 @@ The number of tracks you will require is going to depend on the site. Here the a
 Please note that these reflections are from ice in the winter and water during the summer. We will be implementing surface bias corrections (ice,snow) to our software. Until then, please take this into account when interpreting the results.
 
 
-Note: there is a tide gauge at this site. Please contact NRCAN for more information.
+Note: there is a tide gauge at this site. Please [contact NRCAN](https://contact-contactez.nrcan-rncan.gc.ca/index.cfm?st=-1&cat=-1&scat=-1&lang=eng) for more information.
