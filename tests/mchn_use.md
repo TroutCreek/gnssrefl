@@ -31,22 +31,22 @@ Unfortunately only L1 data should be used at this site. Encourage the station op
 track L2C, L5 (and Galileo, Glonass, and Beidou!)
 
 
-### Web App
+## Web App
 
 You should use my web app to get a sense of what the site looks like. [Please note that the app 
 will be analyzing data in real-time, so please wait for the answers to "pop" up in the 
-left hand side of the page. It takes about 5 seconds](https://gnss-reflections.org/fancy6?example=mchn)
+left hand side of the page. It takes about 5 seconds](https://gnss-reflections.org/fancy6?example=mchn).
 The webapp provides you with a photograph, coordinates (make a note of them), and 
 a google Earth map. Save the periodogram so you can look at it more closely.
 
-### Setting Azimuth and Elevation Mask
+**Setting Azimuth and Elevation Mask**
 
-From the periodogram and google Earth map you should be able to come up with a pretty good 
+From the periodogram and Google Earth map you should be able to come up with a pretty good 
 azimuth mask.  Elevation angle might be a bit trickier, but in this case, go ahead and 
 use what I did, which is in the title of the periodogram plot. For azimuth, I suggest that you 
 use my web app. [Here is a pretty good start on an elevation and azimuth angle mask](https://gnss-reflections.org/rzones?station=mchn&msl=on&RH=7&eang=2&azim1=80&azim2=180). 
 
-### Reproduce the Web App Results
+## Reproduce the Web App
 
 **Make SNR File** 
 
@@ -74,7 +74,7 @@ Why does this not look like the results from my web app? Look closely. Make some
 
 <img src="mchn-better.png" width="500">
 
-### Analyze the Data
+## Analyze the Data
 
 Once you figure out what you need to do, go ahead and analyze the data from 2013.
 

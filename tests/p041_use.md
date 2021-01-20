@@ -1,14 +1,14 @@
 ### Use Case for Boulder, Colorado, USA
 
-Station name: p041 
+**Station Name:** p041 
 
-Location: Boulder, CO, USA
+**Location:** Boulder, CO, USA
 
-Archive: UNAVCO, SOPAC 
+**Archive:** UNAVCO, SOPAC 
 
-DOI:  doi.org/10.7283/T5R49NQQ
+**DOI:**  doi.org/10.7283/T5R49NQQ
 
-Ellipsoidal Coordinates:
+**Ellipsoidal Coordinates:**
 
 - Latitude: 39.94949
 
@@ -31,7 +31,7 @@ The p041 antenna is ~2 meters tall. The site is relatively planar and free of ob
 You should use my web app to get a sense of what the site looks like. [Please note that the app will be analyzing data in real-time, so please wait for the answers to "pop" up in the left hand side of the page. It takes about 5 seconds](https://gnss-reflections.org/fancy6?example=lorg). The webapp provides you with a photograph, coordinates (make a note of them), and a google Earth map. Save the periodogram so you can look at it more closely.
 
 
-## Setting azimuth and elevation mask
+**Setting Azimuth and Elevation Mask**
 
 To get a sense of whether an azimuth or elevation mask is appropriate, check the [Reflection Zone Mapping in the web app](https://gnss-reflections.org/rzones?station=p041&lat=39.9495&lon=-105.1943&height=1728.842&msl=on&RH=2&eang=2&azim1=0&azim2=360).  As noted, this site is relatively flat with no major obstacles to interfere with reflected signals.
 
@@ -49,13 +49,13 @@ If you don't have Fortran installed:
 
 **Take a Quick Look at the Data**
 
-Lets look at the spectral characteristics of the SNR data for the default L1 settings:
+Let's look at the spectral characteristics of the SNR data for the default L1 settings:
 
 *quickLook p041 2020 132*
 
 <img src="p041-l1.png" width="500">
 
-The four subplots show you different regions around the antenna. The x-axis tells you reflector height (RH) and the y-axis gives you the spectral amplitude of the SNR data. The multiple colors are used to depict different satellites that rise or set over that section (quadrant) of the field at P041. Which colors go to which satelliets is not super important. The goal of this exercise is to notice that the peaks of those periodograms are lining up around an x value of 2 meters. You also see some skinnier gray data - and those are failed periodograms. This means that the code doesn't believe the results are relevant. I did not originally plot failed periodograms, but people asked for them, and I do think it is useful to see that there is some quality control being used in this code.
+The four subplots show you different regions around the antenna. The x-axis tells you reflector height (RH) and the y-axis gives you the spectral amplitude of the SNR data. The multiple colors are used to depict different satellites that rise or set over that section (quadrant) of the field at p041. Which colors go to which satelliets is not super important. The goal of this exercise is to notice that the peaks of those periodograms are lining up around an x-value of 2 meters. You also see some skinnier gray data - and those are failed periodograms. This means that the code doesn't believe the results are relevant. I did not originally plot failed periodograms, but people asked for them, and I do think it is useful to see that there is some quality control being used in this code.
 
 I will also point out that these are the data from an excellent receiver, a Septentrio. Not all receivers produce L1 data that are as nice as these. Now try L2C:
 
@@ -82,7 +82,7 @@ I believe Beidou signals are tracked at this site, but the data are not availabl
 quickLook is meant to be a visual assessment of the spectral characteristics. However, it does print out the answers to a file called rh.txt. If you want to assess changes in the reflection environment around a GPS/GNSS sites, i.e. look at multiple days, please look at the other use cases I have compiled.
 
 
-### Analyze the Data
+## Analyze the Data
 
 Begin by creating a json file to set up analysis parameters
 
